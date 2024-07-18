@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const quizData = [
+            {
+              question: "What does noor do when she Is upset?",
+              options: ["Communication is the key!!", "Cry", "Rant", "Does not know what to do"],
+              correct: "Cry"
+            },
+            {
+              question: "What is Noors favourite thing to say?",
+              options: ["Oohhhhhhh acha (this means she definitely did not understand a word)", "Marungi", "Darro Mujh se", "Tumhain bridge se phenk dungi!!!"],
+              correct: "Tumhain bridge se phenk dungi!!!"
+            },
+            {
+              question: "What is Noors favourite go to restaurant?",
+              options: ["Mhmmmm you decide", "Quatro Uno pizza", "Fungi Pasta", "Anything that is Chinese"],
+              correct: "Mhmmm you decide"
+            },
+            {
+              question: "Noor goes out for a walk, what will happen?",
+              options: ["Mujhe sary rasty aaty hai", "Use google maps", "Call a Friend", "Get lost and walk around for 2 hours finding a way back"],
+              correct: "Get lost and walk around for 2 hours finding a way back"
+            },
+            {
+              question: "What is Noor's favourite thing to do?",
+              options: ["Seenzone her bf", "Ghost her bf", "Read a book", "Eat"],
+              correct: "Seenzone her bf"
+            },
+            {
+              question: "What is the ideology Noor follows when eating?",
+              options: ["I should stop eating, I am full", "I am just getting started", "I need to eat more to digest the food I just consumed", "I'll starve to death because I am dieting"],
+              correct: "I need to eat more to digest the food I just consumed"
+            },
+            {
+              question: "Will Noor let her bf slap her butt?",
+              options: ["Yes", "Definitely", "Ofcourse Why not???", "Absolutely"],
+              correct: "Ofcourse Why not???"
+            },
+            {
+              question: "What does noor think most of the time?",
+              options: ["Thinks about something very negative", "Earthquake", "Sometimes Food", "How long should I seenzone my bf?"],
+              correct: "Earthquake"
+            },
+            {
+              question: "How many kids does noor want??",
+              options: ["3", "4", "7(Chill noor)", "2"],
+              correct: "3"
+            },
+            {
+              question: "What's noor favourite thing to cook/bake?",
+              options: ["She should stay away!!", "Brownie(Burnt)", "Biryani(Food Poisoning)", "She'll never learn to cook because her bf likes food alot"],
+              correct: "Brownie(Burnt)"
+            }
+            // Add more questions as needed
+          ];
+          let currentQuestionIndex = 0;
+          let score = 0;
+          let timerInterval;
+          const userAnswers = [];
+      
+          const questionNumberElement = document.getElementById("question-number");
+          const questionTextElement = document.getElementById("question-text");
+          const optionsContainer = document.querySelector(".options");
+          const nextButton = document.getElementById("next-button");
+          const timerElement = document.getElementById("timer");
+          const scoreElement = document.getElementById("score");
+          const progressBar = document.getElementById("progress-bar");
+          const scoreboardContainer = document.getElementById("scoreboard-container");
+          const scoreboardBody = document.querySelector("#scoreboard tbody");
+          const restartButton = document.getElementById("restart-button");
+          const startQuizButton = document.getElementById("start-quiz-button");
+          const quizIntroContainer = document.getElementById("quiz-intro-container");
+
+          function askToStartQuiz() {
+            quizIntroContainer.style.display = "block";
+            document.querySelector(".quiz-container").style.display = "none";
+          }
+      
+          // Function to save progress to localStorage
+          function saveProgress() {
+            localStorage.setItem(
+              "quizProgress",
+              JSON.stringify({
+                currentQuestionIndex,
+                score,
+                userAnswers
+              })
+            );
+          }
+      
+          // Function to retrieve progress from localStorage
+          function retrieveProgress() {
+            const savedProgress = localStorage.getItem("quizProgress");
+            if (savedProgress) {
+              const {
+                currentQuestionIndex: savedIndex,
+                score: savedScore,
+                userAnswers: savedAnswers
+              } = JSON.parse(savedProgress);
+              if (savedIndex < quizData.length) {
+                currentQuestionIndex = savedIndex;
+                score = savedScore;
+                userAnswers.push(...savedAnswers);
+                loadQuestion();
+              } else {
+                displayResults();
+              }
+            } else {
+              askToStartQuiz();
+            }
+          }
+      
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+      
+          function initializeQuiz() {
+            shuffleArray(quizData);
+            quizIntroContainer.style.display = "none";
+            document.querySelector(".quiz-container").style.display = "block";
+            loadQuestion();
+          }
+      
+          function loadQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionNumberElement.textContent = `${currentQuestionIndex + 1}/${
+              quizData.length
+            }`;
+            questionTextElement.textContent = currentQuestion.question;
+      
+            optionsContainer.innerHTML = "";
+            const shuffledOptions = shuffleArray([...currentQuestion.options]);
+            shuffledOptions.forEach((option) => {
+              const label = document.createElement("label");
+              const input = document.createElement("input");
+              input.type = "radio";
+              input.name = "answer";
+              input.value = option;
+      
+              const span = document.createElement("span");
+              span.textContent = option;
+      
+              label.appendChild(input);
+              label.appendChild(span);
+              optionsContainer.appendChild(label);
+            });
+      
+            updateProgressBar();
+            resetTimer();
+          }
+      
+          function updateProgressBar() {
+            const progress = (currentQuestionIndex / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+          }
+      
+          function resetTimer() {
+            clearInterval(timerInterval);
+            let timeLeft = 30;
+            timerElement.textContent = timeLeft;
+      
+            timerInterval = setInterval(() => {
+              timeLeft--;
+              timerElement.textContent = timeLeft;
+      
+              // Color change when timer is running low
+              if (timeLeft <= 10) {
+                timerElement.style.color = "#e74c3c"; // Change to red
+              }
+      
+              // Add additional visual cues as needed (e.g., animations, background color changes)
+      
+              if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                handleNextButtonClick(); // Automatically move to next question or end quiz
+              }
+            }, 1000);
+          }
+      
+          function handleNextButtonClick() {
+            const selectedOption = document.querySelector(
+              'input[name="answer"]:checked'
+            );
+      
+            if (!selectedOption) {
+              alert("Please select an answer before continuing.");
+              return;
+            }
+      
+            userAnswers.push({
+              question: quizData[currentQuestionIndex].question,
+              yourAnswer: selectedOption.value,
+              correctAnswer: quizData[currentQuestionIndex].correct
+            });
+      
+            if (selectedOption.value === quizData[currentQuestionIndex].correct) {
+              score++;
+              scoreElement.textContent = `Score: ${score}`;
+            }
+      
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+              saveProgress(); // Save progress before loading next question
+              loadQuestion();
+            } else {
+              saveProgress(); // Save progress before displaying results
+              displayResults();
+            }
+      
+            document
+              .querySelectorAll('input[name="answer"]')
+              .forEach((input) => (input.checked = false));
+          }
+      
+          function displayResults() {
+            clearInterval(timerInterval);
+            questionNumberElement.textContent = "Quiz Completed";
+            questionTextElement.textContent = `Your score is ${score}/${quizData.length}`;
+      
+            optionsContainer.innerHTML = "";
+            nextButton.style.display = "none";
+            scoreboardContainer.style.display = "block";
+            renderScoreboard();
+            localStorage.removeItem("quizProgress"); // Clear saved progress after displaying results
+          }
+      
+          function renderScoreboard() {
+            scoreboardBody.innerHTML = "";
+            userAnswers.forEach((answer, index) => {
+              const row = document.createElement("tr");
+              const questionCell = document.createElement("td");
+              const yourAnswerCell = document.createElement("td");
+              const correctAnswerCell = document.createElement("td");
+      
+              questionCell.textContent = answer.question;
+              yourAnswerCell.textContent = answer.yourAnswer;
+              correctAnswerCell.textContent = answer.correctAnswer;
+      
+              row.appendChild(questionCell);
+              row.appendChild(yourAnswerCell);
+              row.appendChild(correctAnswerCell);
+              scoreboardBody.appendChild(row);
+            });
+          }
+      
+          function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers.length = 0;
+            scoreElement.textContent = `Score: ${score}`;
+            nextButton.textContent = "Continue";
+            nextButton.style.display = "block";
+            scoreboardContainer.style.display = "none";
+            nextButton.removeEventListener("click", restartQuiz);
+            nextButton.addEventListener("click", handleNextButtonClick);
+            localStorage.removeItem("quizProgress"); // Clear saved progress on restart
+            initializeQuiz();
+          }
+      
+          nextButton.addEventListener("click", handleNextButtonClick);
+          restartButton.addEventListener("click", restartQuiz);
+          startQuizButton.addEventListener("click", initializeQuiz);
+      
+          // Check localStorage for saved progress when DOM is loaded
+          retrieveProgress();
+        });
+      </script>
+    <title>🏠</title>
+</head>
+<body>
+
+    <nav>
+      <a href="index.html">🏠</a>
+      <a href="noor.html">💛</a>
+    </nav>
+    <div class="main-container">
+    <img src="img/giphy.webp" class="giphy-img" alt="Giphy Image">
+    <h1> Welcome BabyGirl😘</h1>
+    </div>
+    
+    <hr>
+    <div class="ice">
+      <div class="ice-cream">
+        <div class="stick"></div>
+        <div class="chocolate"></div>
+      </div>
+    </div>
+    <div class="bodyText">
+      <div class="birthday-cake">
+        <p id="welcome">Happy Birthday to the most amazing person in my life! This website is for you and the wonderful moments we have shared together. I hope it brings a smile to your face and reminds you of how much you mean to me.
+            Enjoy exploring our memories. Love you always!</p>
+            <img src="img/XOsX.gif" class="gif" alt="Giphy Image">
+    </div>
+    </div>
+    <hr>
+    <h1>Our Gallery</h1>
+    <hr>
+    <div class="slide-container">
+        <span id="slider1"></span>
+        <span id="slider2"></span>
+        <span id="slider3"></span>
+        <span id="slider4"></span>
+        <span id="slider5"></span>
+        <div class="image-container">
+          <img src="img/5cba7f30-b1e8-4b75-9382-5a941e5250d0.jpg" alt="" class="slider-image-one">
+          <img src="img/fd7f95cf-4b2f-4e29-9eb5-143c5a5cb3e2.jpg" alt="" class="slider-image-two">
+          <img src="img/c71ba316-54a9-4b6f-a3e1-779288a3b6a6.jpg" alt="" class="slider-image-three">
+          <img src="img/IMG_5656.PNG" alt="" class="slider-image-four">
+          <img src="img/IMG_8088.JPG" alt="" class="slider-image-five">
+        </div>
+        <div class="button-container">
+          <a href="#slider1" class="slider-button"></a>
+          <a href="#slider2" class="slider-button"></a>
+          <a href="#slider3" class="slider-button"></a>
+          <a href="#slider4" class="slider-button"></a>
+          <a href="#slider5" class="slider-button"></a>
+        </div>
+      </div>
+       
+      <h1>Quiz Time📱</h1>
+      <hr>
+      <div id="quiz-intro-container" class="quiz-intro-container">
+        <h2>Are you ready to start the quiz?</h2>
+        <button id="start-quiz-button">Start Quiz</button>
+      </div>
+      <div class="quiz-container">
+        <header>
+          <span id="question-number">1/10</span>
+          <span id="timer">30</span>
+          <span id="score">Score: 0</span>
+        </header>
+        <div class="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    
+        <main>
+          <h2 id="question-text">How does Kendrick react to moving objects?</h2>
+          <div class="options">
+            <label>
+              <input type="radio" name="answer" value="Tracks with eyes">
+              <span>Tracks with eyes</span>
+            </label>
+            <label>
+              <input type="radio" name="answer" value="Tries to follow">
+              <span>Tries to follow</span>
+            </label>
+            <label>
+              <input type="radio" name="answer" value="Gets excited">
+              <span>Gets excited</span>
+            </label>
+            <label>
+              <input type="radio" name="answer" value="Different reaction">
+              <span>Different reaction</span>
+            </label>
+          </div>
+          <footer>
+            <button id="next-button">Continue</button>
+          </footer>
+        </div>
+        <div class="scoreboard-container" id="scoreboard-container" style="display: none;">
+          <h2>Scoreboard</h2>
+          <table id="scoreboard">
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Your Answer</th>
+                <th>Correct Answer</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <button id="restart-button">Restart Quiz</button>
+        </div>
+</body>
+</html>

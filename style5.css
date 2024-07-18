@@ -1,0 +1,17 @@
+body {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    margin: 0;
+    background: var(--dark-color);
+    background-image: var(--noise-texture);
+    background-blend-mode: overlay;
+    background-color: #6495ED; /* Fallback color if variables are not defined */
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

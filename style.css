@@ -1,0 +1,598 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --dark-color: #191f1d;
+  --mid-dark: #555a57;
+  --light-color: #ece0c8;
+  --mid-light: #949993;
+  --shadow: #0005;
+  --linear-rainbow: linear-gradient(
+    to right,#ede6bf,#ecc947,#cb5a31,#6f5d79,#4e779a
+  );
+  --circle-rainbow: radial-gradient(
+    circle at left top,#ede6bf,#ecc947,#cb5a31,#6f5d79,#4e779a
+  );
+  --noise-texture: url(https://i.gyazo.com/a26366e538851a5c569ff648e99b7fd4.png);
+  --gif-texture: url(https://64.media.tumblr.com/da60c13b478dda09ab90c27e880983b8/tumblr_nd4pwdPKdc1tun3l0o1_1280.gifv);
+}
+
+html,
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  background: var(--dark-color);
+  background-image: var(--noise-texture);
+  background-blend-mode: overlay;
+  background-color: #6495ED;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Mulish", sans-serif;
+  font-weight: 1000;
+  font-size: 64px;
+  color: var(--light-color);
+}
+
+h2 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  color: var(--mid-light);
+}
+
+h3 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: 24px;
+  color: var(--mid-light);
+}
+
+p {
+  font-family: "Mulish", sans-serif;
+  font-weight: 700;
+  width: 390px;
+  color: var(--mid-light);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  box-sizing: border-box;
+  margin: 30px 128px;
+  gap: 48px;
+  font-size: 16px;
+}
+
+a {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 1.15rem;
+  font-family: "Mulish", sans-serif;
+  color: black;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+a:not(.buy, .buy-cta, .learn) {
+  width: 64px;
+}
+
+a:hover:not(.buy, .buy-cta, .learn) {
+  transition: all 0.2s ease-in-out;
+  font-weight: 900;
+  text-shadow: 0 0 8px var(--light-color);
+}
+
+.main-container {
+  padding: 0;
+  margin: auto;
+  display:flex; /* Change from grid to flex */
+  justify-content: flex-end; /* Align children to the right */
+  align-items: center; /* Center children vertically */
+  height: 460px;
+  width: 60%; /* Ensure container takes full width */
+  box-sizing: border-box;
+  float: right;
+}
+
+.giphy-img {
+  height: 200px;
+  width: 200px;
+  border: 3px solid var(--dark-color);
+  border-radius: 50%;
+  transition: all 0.4s;
+  box-shadow: 0px 0px var(--shadow);
+  object-fit: cover;
+}
+
+.giphy-img:hover {
+  scale: 1.1;
+  box-shadow: 16px 16px var(--shadow);
+  transition: all 0.2s;
+}
+
+@keyframes spawn{
+  0%{
+    box-shadow: 0 0 0 var(--shadow);
+    opacity:0%;
+  }
+  100%{
+    box-shadow: 0 0 32px var(--shadow);
+    opacity:100%;
+  }
+}
+
+
+  .buy {
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    border: 1px solid var(--mid-light);
+    height: 40px;
+    width: 128px;
+    transition: all 0.2s;
+  }
+  
+  .buy:hover {
+    scale: 1.1;
+    background: var(--light-color);
+    color: var(--dark-color);
+    border: 1px solid var(--light-color);
+  }
+
+  .buy2 {
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    border: 1px solid var(--mid-light);
+    height: 40px;
+    width: 128px;
+    transition: all 0.2s;
+  }
+  
+  .buy2:hover {
+    scale: 1.1;
+    background: var(--light-color);
+    color: var(--dark-color);
+    border: 1px solid var(--light-color);
+  }
+
+
+  body::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+  body::-webkit-scrollbar-track {
+    background: #1e1e24;
+  }
+  body::-webkit-scrollbar-thumb {
+    background: -webkit-radial-gradient(
+      circle,
+      #b9a8fd 0%,
+      #fd1d83 50%,
+      #fcc545 100%
+    );
+  }
+
+  
+
+  .bodyText {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 20px; /* Adjust spacing between paragraph and image */
+  }
+  
+
+  #welcome {
+    color: white; /* Change text color to white */
+    font-size: 1.2rem; /* Increase font size as desired */
+    text-align: justify;
+}  
+
+  .gif {
+    display: block;
+    margin: auto;
+    width: 300px; /* Adjust width as needed */
+    height: auto;
+    border: none; /* Remove any border */
+    outline: none; /* Remove outline */
+    padding: 0; /* Ensure no padding */
+    background: transparent; /* Ensure background is transparent */
+    box-shadow: none; /* Remove box shadow */
+    margin-top: 20px;
+}
+
+
+.slide-container {
+    margin: 50vh auto 0 auto;
+    transform: translateY(-50%);
+    width: 600px; /* Adjust as needed */
+    height: 450px; /* Adjust as needed */
+    overflow: hidden;
+  }
+  
+  .image-container {
+    display: flex;
+    width: 3000px; /* Total width of all images combined */
+    height: 100%; /* Ensure full height of container */
+    transition: transform 0.5s ease; /* Smooth transition for sliding effect */
+  }
+  
+  .slider-image {
+    flex: 0 0 600px; /* Ensure each image takes up 600px width */
+    height: 450px; /* Set height as needed */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+  }
+  
+  .button-container {
+    position: relative;
+    top: 10px;
+  }
+  
+  .slider-button {
+    height: 10px;
+    width: 10px;
+    margin: 4px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .slider-button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Adjust position of images based on target */
+  #slider1:target ~ .image-container {
+    transform: translateX(0);
+  }
+  
+  #slider2:target ~ .image-container {
+    transform: translateX(-600px);
+  }
+  
+  #slider3:target ~ .image-container {
+    transform: translateX(-1200px);
+  }
+  
+  #slider4:target ~ .image-container {
+    transform: translateX(-1800px);
+  }
+  
+  #slider5:target ~ .image-container {
+    transform: translateX(-2400px);
+  }
+  
+  /* Hover animation for image container */
+  .image-container:hover {
+    animation: slide 10s infinite;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-600px);
+    }
+    40% {
+      transform: translateX(-1200px);
+    }
+    60% {
+      transform: translateX(-1800px);
+    }
+    80% {
+      transform: translateX(-2400px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+    
+  }
+
+  .ice{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+  height: 100vh;
+  margin-top: -250px;
+  margin-bottom: -200px;
+  overflow: hidden;
+  }
+  .ice-cream {
+    position: relative;
+    top:50px;
+  }
+  
+  .stick {
+    position: relative;
+    width:40px;
+    height: 140px;
+    border-radius:20px;
+    background-color: #d4a276;
+  }
+  
+  .stick:before {
+    content:"";
+    position: absolute;
+    width:150px;
+    height:200px;
+    background-color: #fffcf2;
+    border-radius:100px 100px 10px 10px;
+    top:-130px;
+    left:-55px;
+  }
+  
+  .stick:after {
+    position: absolute;
+    content:"";
+    width:40px;
+    height: 20px;
+    background-color: rgba(0,0,0,0.2);
+    top:70px;
+  }
+  
+  .chocolate {
+    position: absolute;
+    width: 161px;
+    height: 140px;
+    background-color: #583101;
+    border-radius:100% 100% 0 0;
+    top:-135px;
+    left:-60.5px;
+  }
+  
+  .chocolate:before {
+    content:"";
+    position: absolute;
+    width: 23px;
+    background-color: #583101;
+    height:60px;
+    border-radius:20px;
+    top:120px;
+    box-shadow: 23px 5px #fffcf2, 46px -10px #583101, 69px -5px #fffcf2, 92px -5px #583101, 115px 5px #fffcf2, 138px 5px #583101;
+  }
+  
+  .chocolate:after {
+    content:"";
+    position: absolute;
+    border-right: 5px solid rgba(255,255,255,0.5);
+    border-top: 5px solid rgba(255,255,255,0.5);
+    width:60px;
+    height: 60px;
+    border-top-right-radius: 100%;
+    top:10px;
+    left:85px;
+  }
+
+  .quiz-container,
+.scoreboard-container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px; /* Adjust maximum width */
+  padding: 30px;
+  text-align: center;
+  margin: 100px;
+  margin-top: 100px;
+}
+
+/* Header section with question number, timer, and score */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+/* Styling for question number, timer, and score elements */
+#question-number,
+#timer,
+#score {
+  font-size: 1.2em;
+  color: #777;
+}
+
+/* Timer element with color transition */
+#timer {
+  color: #e74c3c; /* Initial color */
+  transition: color 0.3s ease-in-out; /* Smooth transition for color change */
+}
+
+/* Progress bar container */
+.progress-container {
+  width: 100%;
+  background: #f2f2f2;
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 30px 0;
+}
+
+/* Progress bar with width transition */
+.progress-bar {
+  width: 0;
+  height: 10px;
+  background: #0acf83;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Main section with question text */
+main {
+  margin: 30px 0;
+}
+
+/* Question text styling */
+h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Options container */
+.options {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 20px;
+}
+
+/* Styling for answer options */
+label {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.6s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Radio input styling */
+input[type="radio"] {
+  margin-right: 12px;
+}
+
+/* Footer section with next button */
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+/* Next and restart buttons styling */
+#next-button,
+#restart-button {
+  background: #0acf83;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for options */
+.options label:hover {
+  background-color: #e0e0e0; /* Lighter background on hover */
+  transform: translateY(-3px); /* Move up slightly on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+/* Hover effect for progress bar */
+.progress-bar:hover {
+  background-color: #09ca73; /* Brighter color on hover */
+}
+
+/* Hover effect for next and restart buttons */
+#next-button:hover,
+#restart-button:hover {
+  background-color: #09ca73; /* Brighter color on hover */
+  transform: scale(1.05); /* Slightly larger scale on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+/* Scoreboard container and table styling */
+.scoreboard-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Scoreboard table header and cell styling */
+.scoreboard-container th,
+.scoreboard-container td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.scoreboard-container th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+/* Question text and options animation transitions */
+#question-text {
+  transition: opacity 0.4s ease-in-out; /* Smooth opacity transition */
+}
+
+.options label:hover {
+  opacity: 0.9; /* Slight opacity decrease on hover */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .quiz-container,
+  .scoreboard-container {
+    width: 90%; /* Adjust width for smaller screens */
+    max-width: 90%; /* Ensure maximum width doesn't exceed screen size */
+  }
+
+  h2 {
+    font-size: 1.8em; /* Adjust font size */
+  }
+
+  #next-button,
+  #restart-button {
+    padding: 12px 24px; /* Adjust button padding */
+    font-size: 1em; /* Adjust button font size */
+  }
+
+  .options label {
+    padding: 12px; /* Smaller padding for options */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .quiz-container,
+  .scoreboard-container {
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  h2 {
+    font-size: 1.6em; /* Further adjust font size */
+  }
+
+  #next-button,
+  #restart-button {
+    padding: 10px 20px; /* Adjust button padding */
+    font-size: 0.9em; /* Adjust button font size */
+  }
+
+  .options label {
+    padding: 12px; /* Smaller padding for options */
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .quiz-container,
+  .scoreboard-container {
+    padding: 15px; /* Adjust padding for very small screens */
+  }
+
+  h2 {
+    font-size: 1.4em; /* Further adjust font size */
+  }
+
+  #next-button,
+  #restart-button {
+    padding: 8px 16px; /* Adjust button padding */
+    font-size: 0.8em; /* Adjust button font size */
+  }
+
+  .options label {
+    padding: 10px; /* Smaller padding for options */
+  }
+}
+
+
